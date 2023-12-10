@@ -2,7 +2,7 @@ const mapImage = new Image();
 mapImage.src = "/snowy-sheet.png";
 
 const santaImage = new Image();
-santaImage.src = "/santa.png";
+santaImage.src = "/PlayerIM.png";
 
 const speakerImage = new Image();
 speakerImage.src = "/speaker.png";
