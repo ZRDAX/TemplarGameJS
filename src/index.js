@@ -42,8 +42,8 @@ function isCollidingWithMap(player) {
           {
             x: player.x,
             y: player.y,
-            w: 32,
-            h: 32,
+            w: 16,
+            h: 16,
           },
           {
             x: col * TILE_SIZE,

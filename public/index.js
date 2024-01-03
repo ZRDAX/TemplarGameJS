@@ -35,7 +35,7 @@ const uid = Math.floor(Math.random() * 1000000);
 muteButton.addEventListener("click", () => {
   if (isPlaying) {
     localTracks.audioTrack.setEnabled(false);
-    muteButton.innerText = "unmute";
+    muteButton.innerHTML = "unmute";
     socket.emit("mute", true);
   } else {
     localTracks.audioTrack.setEnabled(true);
