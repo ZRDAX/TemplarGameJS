@@ -60,33 +60,8 @@ function isCollidingWithMap(player) {
   return false;
 }
 
-function tick(delta) {
-  for (const player of players) {
-    const inputs = inputsMap[player.id];
-    const previousY = player.y;
-    const previousX = player.x;
 
-    if (inputs.up) {
-      player.y -= SPEED;
-    } else if (inputs.down) {
-      player.y += SPEED;
-    }
-
-    if (isCollidingWithMap(player)) {
-      player.y = previousY;
-    }
-
-    if (inputs.left) {
-      player.x -= SPEED;
-    } else if (inputs.right) {
-      player.x += SPEED;
-    }
-
-    if (isCollidingWithMap(player)) {
-      player.x = previousX;
-    }
-  }
-
+function updateSnowballs(delta) {
   for (const snowball of snowballs) {
     snowball.x += Math.cos(snowball.angle) * SNOWBALL_SPEED;
     snowball.y += Math.sin(snowball.angle) * SNOWBALL_SPEED;
@@ -107,6 +82,45 @@ function tick(delta) {
     }
   }
   snowballs = snowballs.filter((snowball) => snowball.timeLeft > 0);
+}
+function tick(delta) {
+  for (const player of players) {
+    const inputs = inputsMap[player.id];
+    const previousY = player.y;
+    const previousX = player.x;
+  
+    // Mover para cima
+    if (inputs.up && player.y - SPEED >= 0) {
+      player.y -= SPEED;
+    }
+  
+    // Mover para baixo
+    if (inputs.down && player.y + SPEED + PLAYER_SIZE <= mapHeightInPixels) {
+      player.y += SPEED;
+    }
+  
+    // Verificar colisão com o mapa
+    if (isCollidingWithMap(player)) {
+      player.y = previousY;
+    }
+  
+    // Mover para a esquerda
+    if (inputs.left && player.x - SPEED >= 0) {
+      player.x -= SPEED;
+    }
+  
+    // Mover para a direita
+    if (inputs.right && player.x + SPEED + PLAYER_SIZE <= mapWidthInPixels) {
+      player.x += SPEED;
+    }
+  
+    // Verificar colisão com o mapa
+    if (isCollidingWithMap(player)) {
+      player.x = previousX;
+    }
+  }
+
+  updateSnowballs(delta);
 
   io.emit("players", players);
   io.emit("snowballs", snowballs);
